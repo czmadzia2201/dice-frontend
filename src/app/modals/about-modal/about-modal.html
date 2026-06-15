@@ -1,0 +1,148 @@
+<div class="modal-backdrop">
+
+  <div class="modal">
+
+    <h2>📖 About the Game</h2>
+
+    <p>
+      This application is based on the classic dice game <strong>Yahtzee</strong>.
+      The goal is to achieve the highest possible score by assigning each roll to one of thirteen scoring categories.
+    </p>
+
+    <h3>Classic Rules</h3>
+
+    <p>
+      A game consists of <strong>13 rolls</strong>. Each roll contains five dice.
+      Every roll must be assigned to exactly one category, and each category can be used only once.
+    </p>
+
+    <h4>Scoring Categories</h4>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Example</th>
+        <th>Score</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Ones</td>
+        <td>Sum of all dice showing 1</td>
+        <td>1, 1, 4, 5, 6</td>
+        <td>Sum of matching dice. Example score: 2</td>
+      </tr>
+      <tr>
+        <td>Twos</td>
+        <td>Sum of all dice showing 2</td>
+        <td>2, 2, 3, 5, 6</td>
+        <td>Sum of matching dice. Example score: 4</td>
+      </tr>
+      <tr>
+        <td>Threes</td>
+        <td>Sum of all dice showing 3</td>
+        <td>3, 3, 3, 2, 6</td>
+        <td>Sum of matching dice. Example score: 9</td>
+      </tr>
+      <tr>
+        <td>Fours</td>
+        <td>Sum of all dice showing 4</td>
+        <td>4, 4, 2, 5, 6</td>
+        <td>Sum of matching dice. Example score: 8</td>
+      </tr>
+      <tr>
+        <td>Fives</td>
+        <td>Sum of all dice showing 5</td>
+        <td>5, 5, 1, 2, 6</td>
+        <td>Sum of matching dice. Example score: 10</td>
+      </tr>
+      <tr>
+        <td>Sixes</td>
+        <td>Sum of all dice showing 6</td>
+        <td>6, 6, 6, 2, 1</td>
+        <td>Sum of matching dice. Example score: 18</td>
+      </tr>
+      <tr>
+        <td>Three of a Kind</td>
+        <td>At least three identical dice</td>
+        <td>4, 4, 4, 2, 6</td>
+        <td>Sum of all dice</td>
+      </tr>
+      <tr>
+        <td>Four of a Kind</td>
+        <td>At least four identical dice</td>
+        <td>5, 5, 5, 5, 2</td>
+        <td>Sum of all dice</td>
+      </tr>
+      <tr>
+        <td>Full House</td>
+        <td>Three identical dice and two <strong>other</strong> identical dice</td>
+        <td>2, 2, 2, 5, 5</td>
+        <td>25</td>
+      </tr>
+      <tr>
+        <td>Small Straight</td>
+        <td>Four consecutive values</td>
+        <td>1, 2, 3, 4, 6</td>
+        <td>30</td>
+      </tr>
+      <tr>
+        <td>Large Straight</td>
+        <td>Five consecutive values</td>
+        <td>1, 2, 3, 4, 5</td>
+        <td>40</td>
+      </tr>
+      <tr>
+        <td>Poker (Yahtzee)</td>
+        <td>Five identical dice</td>
+        <td>6, 6, 6, 6, 6</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>Chance</td>
+        <td>Any combination of dice</td>
+        <td>2, 3, 4, 5, 6</td>
+        <td>Sum of all dice</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <p>The order of the dice does not matter. For example, a Large Straight can be scored with 1, 2, 3, 4, 5 as well as 5, 3, 2, 1, 4.</p>
+
+    <h3>Additional Features</h3>
+
+    <p>
+      This application has been extended with additional features to enhance your gameplay experience.
+    </p>
+
+    <h4>Manual Best</h4>
+
+    <p>
+      The <strong>Manual Best</strong> mode lets you create your own alternative assignment of rolls to categories after the game is finished and all rolls are known.
+      Try to find a better or even optimal assignment of categories.
+    </p>
+
+    <h4>Optimal Score</h4>
+
+    <p>
+      Finally, you can also compare your own solutions with the optimal one.
+      The <strong>Optimal Score</strong> feature analyzes all rolls played in the game and calculates the highest score that could have been achieved by assigning rolls to categories in the best possible way.
+    </p>
+
+    <p>
+      Using these features is entirely optional, but they can add an extra layer of challenge and analysis to the game.
+    </p>
+
+    <p>
+      Good luck and have fun!
+    </p>
+
+    <button (click)="close.emit()">
+      Close
+    </button>
+
+  </div>
+
+</div>

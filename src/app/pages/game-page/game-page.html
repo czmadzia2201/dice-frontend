@@ -1,0 +1,119 @@
+<div class="game-layout">
+
+  <aside class="side-panel">
+    <h1>Dice Game</h1>
+
+    <div class="actions">
+      <button (click)="rollDice()" [disabled]="!canRoll()">Roll</button>
+      <button (click)="newGame()">New Game</button>
+      <button (click)="optimal()" [disabled]="!canGetOptimal()">Optimal Score</button>
+    </div>
+
+    <div class="phase-section">
+      <div class="section-title">Game Phase</div>
+
+      <div class="status-badge">
+        {{ gamePhase() }}
+      </div>
+    </div>
+
+    <div class="about-section">
+      <button (click)="showAbout = true">ⓘ About the Game</button>
+    </div>
+
+    <div class="score-box score-box-top">
+      <span>Total score</span>
+      <strong>{{ gameState?.totalScore ?? '-' }}</strong>
+    </div>
+
+    <div class="score-box">
+      <span>Optimal score</span>
+      <strong>{{ gameState?.optimalResult?.totalScore ?? '-' }}</strong>
+    </div>
+  </aside>
+
+  <main class="board">
+
+    <section class="current-roll">
+      @for (value of gameState?.currentRoll ?? []; track $index) {
+        <span class="die">{{ value }}</span>
+      }
+
+      @if ((gameState?.currentRoll?.length ?? 0) === 0) {
+        @for (_ of emptyDice; track $index) {
+          <span class="die empty-die"></span>
+        }
+      }
+    </section>
+
+    <section class="categories">
+
+      <div class="category-row">
+        @for (category of numberCategories; track category) {
+        <button
+          type="button"
+          (click)="scoreCategory(category)"
+          [disabled]="!canChoose(category)">
+          {{ categoryLabels[category] }}
+        </button>
+        }
+      </div>
+
+      <div class="category-row">
+        @for (category of combinationCategories; track category) {
+        <button
+          type="button"
+          (click)="scoreCategory(category)"
+          [disabled]="!canChoose(category)">
+          {{ categoryLabels[category] }}
+        </button>
+        }
+      </div>
+
+    </section>
+
+    <section class="score-table">
+      <table>
+        <thead>
+        <tr>
+          <th>Roll</th>
+          <th>Dice</th>
+          <th>Played</th>
+          <th>Manual best</th>
+          <th>Optimal</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (rowNumber of rowNumbers; track rowNumber) {
+        @let entry = getHistoryEntry(rowNumber);
+        @let optimalEntry = getOptimalHistoryEntry(rowNumber);
+
+        <tr>
+          <td>{{ rowNumber }}</td>
+          <td>{{ entry?.diceValues?.join(', ') ?? '-' }}</td>
+          <td>{{ entry?.score ?? '-' }} ({{ entry?.category ?? '-' }})</td>
+          <td>- (-)</td>
+          <td>{{ optimalEntry?.score ?? '-' }} ({{ optimalEntry?.category ?? '-' }})</td>
+        </tr>
+        }
+
+        <tr class="total-row">
+          <td colspan="2">Total</td>
+          <td>{{ gameState?.totalScore ?? '-' }}</td>
+          <td>-</td>
+          <td>{{ gameState?.optimalResult?.totalScore ?? '-' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</div>
+
+@if (showAbout) {
+  <app-about-modal
+    (close)="showAbout = false">
+  </app-about-modal>
+}
