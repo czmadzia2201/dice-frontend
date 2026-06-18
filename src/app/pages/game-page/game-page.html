@@ -6,7 +6,8 @@
     <div class="actions">
       <button (click)="rollDice()" [disabled]="!canRoll()">Roll</button>
       <button (click)="newGame()">New Game</button>
-      <button (click)="optimal()" [disabled]="!canGetOptimal()">Optimal Score</button>
+      <button (click)="optimal()" [disabled]="!canUsePostGameFeatures()">Optimal Score</button>
+      <button (click)="initManual()" [disabled]="!canUsePostGameFeatures()">Initialize Manual</button>
     </div>
 
     <div class="phase-section">
@@ -21,14 +22,22 @@
       <button (click)="showAbout = true">ⓘ About the Game</button>
     </div>
 
-    <div class="score-box score-box-top">
-      <span>Total score</span>
-      <strong>{{ gameState?.totalScore ?? '-' }}</strong>
-    </div>
+    <div class="score-box-section">
+      <div class="section-title">Total Scores</div>
+      <div class="score-box">
+        <span>Played</span>
+        <strong>{{ gameState?.totalScore ?? '-' }}</strong>
+      </div>
 
-    <div class="score-box">
-      <span>Optimal score</span>
-      <strong>{{ gameState?.optimalResult?.totalScore ?? '-' }}</strong>
+      <div class="score-box">
+        <span>Manual</span>
+        <strong>{{ gameState?.manualResult?.totalScore ?? '-' }}</strong>
+      </div>
+
+      <div class="score-box">
+        <span>Optimal</span>
+        <strong>{{ gameState?.optimalResult?.totalScore ?? '-' }}</strong>
+      </div>
     </div>
   </aside>
 
@@ -52,7 +61,8 @@
         @for (category of numberCategories; track category) {
         <button
           type="button"
-          (click)="scoreCategory(category)"
+          (click)="onCategoryClick(category)"
+          [class.selected-manual-category]="category === selectedManualCategory"
           [disabled]="!canChoose(category)">
           {{ categoryLabels[category] }}
         </button>
@@ -63,7 +73,8 @@
         @for (category of combinationCategories; track category) {
         <button
           type="button"
-          (click)="scoreCategory(category)"
+          (click)="onCategoryClick(category)"
+          [class.selected-manual-category]="category === selectedManualCategory"
           [disabled]="!canChoose(category)">
           {{ categoryLabels[category] }}
         </button>
@@ -87,21 +98,37 @@
         <tbody>
         @for (rowNumber of rowNumbers; track rowNumber) {
         @let entry = getHistoryEntry(rowNumber);
+        @let manualEntry = getManualHistoryEntry(rowNumber);
         @let optimalEntry = getOptimalHistoryEntry(rowNumber);
 
         <tr>
           <td>{{ rowNumber }}</td>
           <td>{{ entry?.diceValues?.join(', ') ?? '-' }}</td>
-          <td>{{ entry?.score ?? '-' }} ({{ entry?.category ?? '-' }})</td>
-          <td>- (-)</td>
-          <td>{{ optimalEntry?.score ?? '-' }} ({{ optimalEntry?.category ?? '-' }})</td>
+          <td>{{ formatRollEntry(entry) }}</td>
+          <td
+            class="manual-cell"
+            [class.manual-cell-active]="isManualMode()"
+            (click)="assignManualCategory(rowNumber)">
+            {{ formatRollEntry(manualEntry) }}
+
+            @if (manualEntry?.category) {
+            <button
+              type="button"
+              class="clear-manual-button"
+              title="Clear manual choice"
+              (click)="clearManualCategory(rowNumber); $event.stopPropagation()">
+              🗑️
+            </button>
+            }
+          </td>
+          <td>{{ formatRollEntry(optimalEntry) }}</td>
         </tr>
         }
 
         <tr class="total-row">
           <td colspan="2">Total</td>
           <td>{{ gameState?.totalScore ?? '-' }}</td>
-          <td>-</td>
+          <td>{{ gameState?.manualResult?.totalScore ?? '-' }}</td>
           <td>{{ gameState?.optimalResult?.totalScore ?? '-' }}</td>
         </tr>
         </tbody>

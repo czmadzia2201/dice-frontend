@@ -1,6 +1,6 @@
 import { RollEntry } from './roll-entry';
 
-export interface OptimalResult {
+export interface ResultSummary {
     totalScore: number;
     rollHistory: RollEntry[];
 }

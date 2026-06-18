@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GameState } from '../models/game-state';
 import { Category } from '../models/category';
+import { ManualChoice } from '../models/manual-choice';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,20 @@ export class GameService {
   optimal(id: string): Observable<GameState> {
     return this.http.post<GameState>(
       `${this.apiUrl}/${id}/optimal`,
+      {}
+    );
+  }
+
+  manual(id: string, manualChoice: ManualChoice): Observable<GameState> {
+    return this.http.post<GameState>(
+      `${this.apiUrl}/${id}/manual`,
+      manualChoice
+    );
+  }
+
+  initManual(id: string): Observable<GameState> {
+    return this.http.post<GameState>(
+      `${this.apiUrl}/${id}/init-manual`,
       {}
     );
   }

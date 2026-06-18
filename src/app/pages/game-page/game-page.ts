@@ -5,6 +5,9 @@ import { GameState } from '../../models/game-state';
 import { Category, CategoryType, CATEGORY_TYPES } from '../../models/category';
 import { GamePhase } from '../../models/game-phase';
 import { AboutModal } from '../../modals/about-modal/about-modal';
+import { ManualChoice } from '../../models/manual-choice';
+import { ChoiceAction } from '../../models/choice-action';
+import { RollEntry } from '../../models/roll-entry';
 
 @Component({
   selector: 'app-game-page',
@@ -16,6 +19,8 @@ export class GamePage {
   private gameService = inject(GameService);
 
   gameState: GameState | null = null;
+
+  selectedManualCategory?: Category;
 
   showAbout = false;
 
@@ -56,10 +61,6 @@ export class GamePage {
   readonly emptyDice = Array.from({ length: 5 });
 
 
-  isCategoryAvailable(category: Category): boolean {
-    return this.gameState?.availableCategories.includes(category) ?? true;
-  }
-
   rollDice(): void {
     this.gameService.rollDice(this.gameState?.id).subscribe(state => {
       this.gameState = state;
@@ -69,6 +70,7 @@ export class GamePage {
   newGame(): void {
     this.gameService.newGame().subscribe(state => {
       this.gameState = state;
+      this.selectedManualCategory = undefined;
     });
   }
 
@@ -78,8 +80,32 @@ export class GamePage {
     });
   }
 
+  onCategoryClick(category: Category): void {
+    if (this.gameState?.gamePhase === 'CHOICE') {
+      this.scoreCategory(category);
+    }
+    if (this.gameState?.gamePhase === 'FINISHED' && this.gameState?.manualAvailableCategories != null) {
+      this.selectManualCategory(category);
+    }
+  }
+
   scoreCategory(category: Category): void {
     this.gameService.scoreCategory(this.gameState!.id, category).subscribe(state => {
+      this.gameState = state;
+    });
+  }
+
+  selectManualCategory(category: Category): void {
+    this.selectedManualCategory =
+      this.selectedManualCategory === category ? undefined : category;
+  }
+
+  initManual(): void {
+    if (this.gameState?.manualResult) {
+      return;
+    }
+
+    this.gameService.initManual(this.gameState!.id).subscribe(state => {
       this.gameState = state;
     });
   }
@@ -89,12 +115,30 @@ export class GamePage {
         === GamePhase.ROLL;
   }
 
-  canGetOptimal(): boolean {
+  canUsePostGameFeatures(): boolean {
     return this.gameState?.gamePhase === GamePhase.FINISHED;
   }
 
   canChoose(category: Category): boolean {
-    return this.gameState?.gamePhase === 'CHOICE' && this.isCategoryAvailable(category);
+    return this.canChooseInGame(category) || this.canChooseInManual(category);
+  }
+
+  private canChooseInGame(category: Category): boolean {
+    return this.gameState?.gamePhase === 'CHOICE'
+      && this.isCategoryAvailable(category);
+  }
+
+  private canChooseInManual(category: Category): boolean {
+    return this.gameState?.manualAvailableCategories != null
+      && this.isManualCategoryAvailable(category);
+  }
+
+  isCategoryAvailable(category: Category): boolean {
+    return this.gameState?.availableCategories.includes(category) ?? true;
+  }
+
+  isManualCategoryAvailable(category: Category): boolean {
+    return this.gameState?.manualAvailableCategories?.includes(category) ?? true;
   }
 
   gamePhase(): string {
@@ -109,6 +153,57 @@ export class GamePage {
 
   getOptimalHistoryEntry(rowNumber: number) {
     return this.gameState?.optimalResult?.rollHistory?.[rowNumber - 1];
+  }
+
+  getManualHistoryEntry(rowNumber: number) {
+    return this.gameState?.manualResult?.rollHistory?.[rowNumber - 1];
+  }
+
+  isManualMode(): boolean {
+    return this.gameState?.manualResult != null;
+  }
+
+  assignManualCategory(rollNumber: number): void {
+    if (!this.selectedManualCategory) {
+      return;
+    }
+
+    const manualChoice: ManualChoice = {
+      rollNumber,
+      action: ChoiceAction.ASSIGN,
+      category: this.selectedManualCategory
+    };
+
+    this.gameService.manual(this.gameState!.id, manualChoice).subscribe(state => {
+      this.gameState = state;
+      this.selectedManualCategory = undefined;
+    });
+  }
+
+  clearManualCategory(rollNumber: number): void {
+    const manualEntry = this.getManualHistoryEntry(rollNumber);
+
+    if (!manualEntry?.category) {
+      return;
+    }
+
+    const manualChoice: ManualChoice = {
+      rollNumber,
+      action: ChoiceAction.CLEAR,
+      category: manualEntry.category
+    };
+
+    this.gameService.manual(this.gameState!.id, manualChoice).subscribe(state => {
+      this.gameState = state;
+    });
+  }
+
+  formatRollEntry(entry: RollEntry | undefined | null): string {
+    if (entry?.category == null || entry.score == null) {
+      return '- (-)';
+    }
+
+    return `${entry.score} (${this.categoryLabels[entry.category]})`;
   }
 
 }
