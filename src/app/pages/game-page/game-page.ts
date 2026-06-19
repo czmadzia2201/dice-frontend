@@ -81,10 +81,10 @@ export class GamePage {
   }
 
   onCategoryClick(category: Category): void {
-    if (this.gameState?.gamePhase === 'CHOICE') {
+    if (this.gameState?.gamePhase === GamePhase.CHOICE) {
       this.scoreCategory(category);
     }
-    if (this.gameState?.gamePhase === 'FINISHED' && this.gameState?.manualAvailableCategories != null) {
+    if (this.gameState?.gamePhase === GamePhase.FINISHED && this.gameState?.manualAvailableCategories != null) {
       this.selectManualCategory(category);
     }
   }
@@ -124,7 +124,7 @@ export class GamePage {
   }
 
   private canChooseInGame(category: Category): boolean {
-    return this.gameState?.gamePhase === 'CHOICE'
+    return this.gameState?.gamePhase === GamePhase.CHOICE
       && this.isCategoryAvailable(category);
   }
 
@@ -134,11 +134,11 @@ export class GamePage {
   }
 
   isCategoryAvailable(category: Category): boolean {
-    return this.gameState?.availableCategories.includes(category) ?? true;
+    return this.gameState?.availableCategories.includes(category) ?? false;
   }
 
   isManualCategoryAvailable(category: Category): boolean {
-    return this.gameState?.manualAvailableCategories?.includes(category) ?? true;
+    return this.gameState?.manualAvailableCategories?.includes(category) ?? false;
   }
 
   gamePhase(): string {

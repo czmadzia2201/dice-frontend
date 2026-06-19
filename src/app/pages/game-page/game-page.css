@@ -206,7 +206,9 @@ th:first-child {
 }
 
 .manual-cell {
+  position: relative;
   min-width: 120px;
+  padding-right: 34px;
 }
 
 .manual-cell-active {
@@ -216,21 +218,6 @@ th:first-child {
 
 .manual-cell-active:hover {
   background: #eeeeee;
-}
-
-.total-row {
-  font-weight: 700;
-  background: #f7f7f7;
-}
-
-.total-row td {
-  border-top: 2px solid #bbb;
-}
-
-.manual-cell {
-  position: relative;
-  min-width: 120px;
-  padding-right: 34px;
 }
 
 .clear-manual-button {
@@ -257,3 +244,13 @@ th:first-child {
   background: #eeeeee;
   opacity: 1;
 }
+
+.total-row {
+  font-weight: 700;
+  background: #f7f7f7;
+}
+
+.total-row td {
+  border-top: 2px solid #bbb;
+}
+
