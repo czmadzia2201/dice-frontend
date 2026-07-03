@@ -7,7 +7,7 @@
 
 .game-layout {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 250px 1fr;
   gap: 20px;
   max-width: 1300px;
   height: 100vh;
@@ -26,35 +26,103 @@
   gap: 18px;
 }
 
-h1 {
-  margin: 0;
-  line-height: 1.1;
-  font-size: 24px;
+.roll-mode-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.roll-mode-switch {
+  display: flex;
+}
+
+.roll-mode-button {
+  flex: 1;
+  position: relative;
+  padding: 8px 12px;
+  border: 1px solid #bdbdbd;
+  background: white;
+  cursor: pointer;
+  transition: background-color .2s, border-color .2s;
+}
+
+.roll-mode-button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.roll-mode-button:last-child {
+  border-radius: 0 8px 8px 0;
+  border-left: none;
+}
+
+.roll-mode-button.selected {
+  border-color: #2e7d32;
+  background: #eef8ee;
+}
+
+.roll-mode-button:hover:not(.selected) {
+  background: #f6f6f6;
+}
+
+.roll-mode-button .label {
+  display: block;
+  text-align: center;
+}
+
+.roll-mode-button .check {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  text-align: center;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.game-status {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.status-label {
+  font-size: 10px;
   font-weight: 600;
+  color: #666;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  padding-left: 2px;
 }
 
 .status-badge {
-  padding: 10px 12px;
+  min-width: 100px;
+  padding: 5px 10px;
+  border: 1px solid #d8d8d8;
   border-radius: 999px;
-  background: #222;
-  color: white;
-  font-weight: 700;
+  background: #fafafa;
+  color: #222;
+  font-size: 12px;
+  font-weight: 600;
   text-align: center;
-  font-size: 14px;
+  white-space: nowrap;
 }
 
 .actions {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.phase-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .section-title {
@@ -112,11 +180,11 @@ button:disabled {
   display: grid;
   grid-template-rows: auto auto 1fr;
   gap: 14px;
-  min-width: 0;
+  min-width: 600px;
 }
 
 .current-roll {
-  min-height: 74px;
+  min-height: 100px;
   display: flex;
   gap: 12px;
   align-items: center;
@@ -125,11 +193,12 @@ button:disabled {
   border: 1px solid #ddd;
   border-radius: 14px;
   padding: 12px;
+  position: relative;
 }
 
 .die {
-  width: 46px;
-  height: 46px;
+  width: 50px;
+  height: 50px;
   border: 2px solid #222;
   border-radius: 10px;
   display: inline-flex;
@@ -138,11 +207,35 @@ button:disabled {
   font-size: 24px;
   font-weight: 700;
   background: #fff;
+  appearance: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.die-lock-icon {
+  position: absolute;
+  top: -7px;
+  left: 7px;
+  font-size: 12px;
+  color: #666;
+  background: #fff;
+  line-height: 1;
+  padding: 0 2px;
 }
 
 .empty-die {
   color: transparent;
   background: #fafafa;
+}
+
+.die:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.die.parked {
+  background: #f5f5f5;
 }
 
 .categories {

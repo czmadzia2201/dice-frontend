@@ -3,23 +3,50 @@
   <aside class="side-panel">
     <h1>Dice Game</h1>
 
+    <div class="roll-mode-section">
+      <div class="section-title">Next game mode</div>
+
+      <div class="roll-mode-switch">
+
+        <button
+          type="button"
+          class="roll-mode-button"
+          [class.selected]="selectedRollMode === RollMode.SINGLE_ROLL"
+          (click)="switchRollMode(RollMode.SINGLE_ROLL)">
+          <span class="check">
+            @if (selectedRollMode === RollMode.SINGLE_ROLL) {
+              <i class="bi bi-check-lg"></i>
+            }
+          </span>
+          <span class="label">Single roll</span>
+        </button>
+
+        <button
+          type="button"
+          class="roll-mode-button"
+          [class.selected]="selectedRollMode === RollMode.THREE_ROLLS"
+          (click)="switchRollMode(RollMode.THREE_ROLLS)">
+          <span class="check">
+            @if (selectedRollMode === RollMode.THREE_ROLLS) {
+              <i class="bi bi-check-lg"></i>
+            }
+          </span>
+          <span class="label">Three rolls</span>
+        </button>
+
+      </div>
+    </div>
+
     <div class="actions">
+      <div class="section-title">Actions</div>
       <button (click)="rollDice()" [disabled]="!canRoll()">Roll</button>
       <button (click)="newGame()">New Game</button>
       <button (click)="optimal()" [disabled]="!canUsePostGameFeatures()">Optimal Score</button>
       <button (click)="initManual()" [disabled]="!canUsePostGameFeatures()">Manual Mode</button>
     </div>
 
-    <div class="phase-section">
-      <div class="section-title">Game Phase</div>
-
-      <div class="status-badge">
-        {{ gamePhase() }}
-      </div>
-    </div>
-
     <div class="about-section">
-      <button (click)="showAbout = true">ⓘ About the Game</button>
+      <button (click)="showAbout = true"><i class="bi bi-info-circle"></i> About the Game</button>
     </div>
 
     <div class="score-box-section">
@@ -45,14 +72,45 @@
 
     <section class="current-roll">
       @for (value of gameState?.currentRoll ?? []; track $index) {
-        <span class="die">{{ value }}</span>
+      <button
+        type="button"
+        class="die"
+        [class.parked]="!diceToRoll[$index]"
+        [disabled]="!canToggleDice()"
+        (click)="toggleParkedDie($index)">
+        @if (!diceToRoll[$index]) {
+          <i class="bi bi-lock-fill die-lock-icon"></i>
+        }
+        {{ value }}
+      </button>
       }
 
       @if ((gameState?.currentRoll?.length ?? 0) === 0) {
-        @for (_ of emptyDice; track $index) {
-          <span class="die empty-die"></span>
-        }
+      @for (_ of emptyDice; track $index) {
+      <button
+        type="button"
+        class="die empty-die"
+        disabled>
+      </button>
       }
+      }
+
+      <div class="game-status">
+        <div class="status-item">
+          <div class="status-label">Mode</div>
+          <div class="status-badge">
+            {{ currentGameRollMode() }}
+          </div>
+        </div>
+
+        <div class="status-item">
+          <div class="status-label">Phase</div>
+          <div class="status-badge">
+            {{ gamePhase() }}
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <section class="categories">
@@ -117,7 +175,7 @@
               class="clear-manual-button"
               title="Clear manual choice"
               (click)="clearManualCategory(rowNumber); $event.stopPropagation()">
-              🗑️
+              <i class="bi bi-trash"></i>
             </button>
             }
           </td>

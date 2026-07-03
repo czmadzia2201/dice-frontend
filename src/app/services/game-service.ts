@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GameState } from '../models/game-state';
 import { Category } from '../models/category';
 import { ManualChoice } from '../models/manual-choice';
+import { RollMode } from '../models/roll-mode';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,26 @@ export class GameService {
 
   constructor(private http: HttpClient) {}
 
-  rollDice(id?: string): Observable<GameState> {
-    const url = id
-      ? `${this.apiUrl}/${id}/roll`
-      : `${this.apiUrl}/roll`;
-    return this.http.post<GameState>(url, {});
+  rollDice(id: string, diceToRoll: boolean[]): Observable<GameState> {
+    return this.http.post<GameState>(`${this.apiUrl}/${id}/roll`,
+      JSON.stringify(diceToRoll),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  }
+
+  newGameAndRollDice(rollMode: RollMode): Observable<GameState> {
+    return this.http.post<GameState>(`${this.apiUrl}/roll`,
+      JSON.stringify(rollMode),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
   }
 
   scoreCategory(id: string, category: Category): Observable<GameState> {
@@ -33,10 +49,15 @@ export class GameService {
     );
   }
 
-  newGame(): Observable<GameState> {
+  newGame(rollMode: RollMode): Observable<GameState> {
     return this.http.post<GameState>(
       `${this.apiUrl}/new-game`,
-      {}
+      JSON.stringify(rollMode),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
     );
   }
 
