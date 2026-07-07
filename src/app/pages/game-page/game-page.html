@@ -155,9 +155,9 @@
 
         <tbody>
         @for (rowNumber of rowNumbers; track rowNumber) {
-        @let entry = getHistoryEntry(rowNumber);
-        @let manualEntry = getManualHistoryEntry(rowNumber);
-        @let optimalEntry = getOptimalHistoryEntry(rowNumber);
+        @let entry = historyEntry(rowNumber);
+        @let manualEntry = manualHistoryEntry(rowNumber);
+        @let optimalEntry = optimalHistoryEntry(rowNumber);
 
         <tr>
           <td>{{ rowNumber }}</td>
@@ -166,6 +166,7 @@
           <td
             class="manual-cell"
             [class.manual-cell-active]="isManualMode()"
+            [class.manual-cell-assignable]="canAssignManualCategory(rowNumber)"
             (click)="assignManualCategory(rowNumber)">
             {{ formatRollEntry(manualEntry) }}
 

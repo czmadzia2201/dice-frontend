@@ -78,7 +78,7 @@ export class GamePage {
 
   rollDice(): void {
     if (this.gameState) {
-        this.gameService.rollDice(this.gameState!.id, this.diceToRoll).subscribe(state => {
+        this.gameService.rollDice(this.gameState.id, this.diceToRoll).subscribe(state => {
           this.gameState = state;
         });
     } else {
@@ -201,15 +201,15 @@ export class GamePage {
     ];
   }
 
-  getHistoryEntry(rowNumber: number) {
+  historyEntry(rowNumber: number) {
     return this.gameState?.rollHistory?.[rowNumber - 1];
   }
 
-  getOptimalHistoryEntry(rowNumber: number) {
+  optimalHistoryEntry(rowNumber: number) {
     return this.gameState?.optimalResult?.rollHistory?.[rowNumber - 1];
   }
 
-  getManualHistoryEntry(rowNumber: number) {
+  manualHistoryEntry(rowNumber: number) {
     return this.gameState?.manualResult?.rollHistory?.[rowNumber - 1];
   }
 
@@ -217,8 +217,16 @@ export class GamePage {
     return this.gameState?.manualResult != null;
   }
 
+  canAssignManualCategory(rowNumber: number): boolean {
+    return this.isManualMode() && this.selectedManualCategory != null
+            && !this.manualHistoryEntry(rowNumber)?.category;
+  }
+
   assignManualCategory(rollNumber: number): void {
     if (!this.selectedManualCategory) {
+      return;
+    }
+    if (this.manualHistoryEntry(rollNumber)?.category) {
       return;
     }
 
@@ -235,7 +243,7 @@ export class GamePage {
   }
 
   clearManualCategory(rollNumber: number): void {
-    const manualEntry = this.getManualHistoryEntry(rollNumber);
+    const manualEntry = this.manualHistoryEntry(rollNumber);
 
     if (!manualEntry?.category) {
       return;

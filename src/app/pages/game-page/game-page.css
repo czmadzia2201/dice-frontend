@@ -305,7 +305,6 @@ th:first-child {
 }
 
 .manual-cell-active {
-  cursor: pointer;
   background: #fafafa;
 }
 
@@ -313,6 +312,9 @@ th:first-child {
   background: #eeeeee;
 }
 
+.manual-cell-assignable {
+  cursor: pointer;
+}
 .clear-manual-button {
   position: absolute;
   right: 6px;
