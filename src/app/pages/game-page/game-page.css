@@ -232,6 +232,7 @@ button:disabled {
 .die:disabled {
   opacity: 1;
   cursor: default;
+  color: #666;
 }
 
 .die.parked {
