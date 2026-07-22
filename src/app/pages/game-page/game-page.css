@@ -262,11 +262,8 @@ button:disabled {
 }
 
 .categories button.selected-manual-category {
-  background: #222;
-  color: white;
-  border-color: #222;
-  font-weight: 700;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  border-color: #2e7d32;
+  background: #eef8ee;
 }
 
 .score-table {
