@@ -13,12 +13,16 @@ button {
   padding: 8px 14px;
   border: 1px solid #bbb;
   border-radius: 8px;
-  background: #fff;
   cursor: pointer;
+  border-color: #2e7d32;
+  background: #eef8ee;
+  color: #256429;
+  display: block;
+  margin-left: auto;
 }
 
 button:hover {
-  background: #f0f0f0;
+  background: #e2f2e2;
 }
 
 .modal-backdrop {
