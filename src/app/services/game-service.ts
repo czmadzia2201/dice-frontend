@@ -11,7 +11,7 @@ import { RollMode } from '../models/roll-mode';
 })
 export class GameService {
 
-  private apiUrl = 'http://localhost:8080/dice';
+  private apiUrl = 'http://localhost:8080/dice/api';
 
   constructor(private http: HttpClient) {}
 
