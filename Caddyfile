@@ -9,7 +9,7 @@
     redir /dice /dice/ 308
 
     handle_path /dice/* {
-        root * /app
+        root * /app/dist/dice-frontend/browser
         try_files {path} /index.html
         file_server
     }
