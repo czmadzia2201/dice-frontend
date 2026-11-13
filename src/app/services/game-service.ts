@@ -5,13 +5,14 @@ import { GameState } from '../models/game-state';
 import { Category } from '../models/category';
 import { ManualChoice } from '../models/manual-choice';
 import { RollMode } from '../models/roll-mode';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  private apiUrl = 'http://localhost:8080/dice/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
