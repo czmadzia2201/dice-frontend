@@ -1,0 +1,16 @@
+
+{
+    auto_https off
+}
+
+:{$PORT:3000} {
+    encode gzip
+
+    redir /dice /dice/ 308
+
+    handle_path /dice/* {
+        root * /app
+        try_files {path} /index.html
+        file_server
+    }
+}
