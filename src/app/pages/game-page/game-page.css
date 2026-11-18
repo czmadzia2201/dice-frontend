@@ -26,6 +26,25 @@
   gap: 18px;
 }
 
+
+.side-panel-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.back-link {
+  color: #666;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  text-decoration: underline;
+}
+
 .roll-mode-section {
   display: flex;
   flex-direction: column;
