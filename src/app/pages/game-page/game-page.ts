@@ -48,11 +48,11 @@ export class GamePage {
     [Category.FOURS]: 'Fours',
     [Category.FIVES]: 'Fives',
     [Category.SIXES]: 'Sixes',
-    [Category.THREE_OF_A_KIND]: 'Three of a Kind',
-    [Category.FOUR_OF_A_KIND]: 'Four of a Kind',
-    [Category.FULL_HOUSE]: 'Full House',
-    [Category.SMALL_STRAIGHT]: 'Small Straight',
-    [Category.LARGE_STRAIGHT]: 'Large Straight',
+    [Category.THREE_OF_A_KIND]: 'Three of a kind',
+    [Category.FOUR_OF_A_KIND]: 'Four of a kind',
+    [Category.FULL_HOUSE]: 'Full house',
+    [Category.SMALL_STRAIGHT]: 'Small straight',
+    [Category.LARGE_STRAIGHT]: 'Large straight',
     [Category.POKER]: 'Poker',
     [Category.CHANCE]: 'Chance'
   };
