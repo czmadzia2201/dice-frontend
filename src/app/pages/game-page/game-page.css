@@ -2,7 +2,8 @@
   display: block;
   min-height: 100vh;
   background: #f6f7f9;
-  color: #222;
+  color: #666;
+  font-size: 14px;
 }
 
 .game-layout {
@@ -188,7 +189,7 @@ button:disabled {
 
 .score-box {
   padding: 14px;
-  border-radius: 12px;
+  border-radius: 10px;
   background: #f2f2f2;
   display: flex;
   justify-content: space-between;
@@ -196,7 +197,7 @@ button:disabled {
 }
 
 .score-box strong {
-  font-size: 26px;
+  font-size: 24px;
 }
 
 .board {
@@ -228,7 +229,7 @@ button:disabled {
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   background: #fff;
   appearance: none;
   padding: 0;
@@ -368,8 +369,8 @@ th:first-child {
 }
 
 .total-row {
-  font-weight: 700;
-  background: #f7f7f7;
+  font-weight: 600;
+  background: #f2f2f2;
 }
 
 .total-row td {
