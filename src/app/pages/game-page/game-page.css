@@ -1,4 +1,6 @@
 :host {
+  --border-color: #ddd;
+  --button-border-color: #bbb;
   display: block;
   min-height: 100vh;
   background: #f6f7f9;
@@ -11,15 +13,15 @@
   grid-template-columns: 250px 1fr;
   gap: 20px;
   max-width: 1300px;
-  height: 100vh;
+  min-height: calc(100vh - 30px);
   margin: 0 auto;
-  padding: 18px;
+  padding: 18px 18px 12px;
   box-sizing: border-box;
 }
 
 .side-panel {
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 18px;
   display: flex;
@@ -34,14 +36,14 @@
   gap: 4px;
 }
 
-.back-link {
+.page-link {
   color: #666;
   font-size: 14px;
   text-decoration: none;
 }
 
-.back-link:hover,
-.back-link:focus-visible {
+.page-link:hover,
+.page-link:focus-visible {
   text-decoration: underline;
 }
 
@@ -59,7 +61,7 @@
   flex: 1;
   position: relative;
   padding: 8px 12px;
-  border: 1px solid #bdbdbd;
+  border: 1px solid var(--button-border-color);
   background: white;
   cursor: pointer;
   transition: background-color .2s, border-color .2s;
@@ -133,7 +135,7 @@
 .status-badge {
   min-width: 100px;
   padding: 5px 10px;
-  border: 1px solid #d8d8d8;
+  border: 1px solid var(--border-color);
   border-radius: 999px;
   background: #fafafa;
   color: #222;
@@ -165,7 +167,7 @@
 
 button {
   padding: 8px 12px;
-  border: 1px solid #bbb;
+  border: 1px solid var(--button-border-color);
   border-radius: 8px;
   background: white;
   cursor: pointer;
@@ -214,7 +216,7 @@ button:disabled {
   align-items: center;
   justify-content: center;
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 12px;
   position: relative;
@@ -265,7 +267,7 @@ button:disabled {
 
 .categories {
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 12px;
 
@@ -298,7 +300,7 @@ button:disabled {
 
 .score-table {
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   overflow: auto;
 }
@@ -311,7 +313,7 @@ table {
 
 th,
 td {
-  border-bottom: 1px solid #e3e3e3;
+  border-bottom: 1px solid var(--border-color);
   padding: 7px 8px;
   text-align: center;
   white-space: nowrap;
@@ -374,6 +376,14 @@ th:first-child {
 }
 
 .total-row td {
-  border-top: 2px solid #bbb;
+  border-top: 2px solid var(--border-color);
 }
 
+
+.game-footer {
+  width: min(calc(100% - 36px), 1264px);
+  margin: 0 auto;
+  padding-bottom: 8px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}

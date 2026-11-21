@@ -11,7 +11,7 @@ p {
 button {
   min-width: 100px;
   padding: 8px 14px;
-  border: 1px solid #bbb;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   cursor: pointer;
   border-color: #2e7d32;
@@ -69,15 +69,15 @@ button:hover {
 /* pionowe separatory */
 .modal th:not(:last-child),
 .modal td:not(:last-child) {
-  border-right: 1px solid #d8d8d8;
+  border-right: 1px solid var(--border-color);
 }
 
 /* delikatne poziome linie */
 .modal tr:not(:last-child) td {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* nagłówek odcięty mocniej */
 .modal thead tr {
-  border-bottom: 2px solid #cfcfcf;
+  border-bottom: 2px solid var(--border-color);
 }
