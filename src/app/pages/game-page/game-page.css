@@ -1,5 +1,6 @@
 :host {
   --border-color: #ddd;
+  --button-border-color: #bbb;
   display: block;
   min-height: 100vh;
   background: #f6f7f9;
@@ -60,7 +61,7 @@
   flex: 1;
   position: relative;
   padding: 8px 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--button-border-color);
   background: white;
   cursor: pointer;
   transition: background-color .2s, border-color .2s;
@@ -166,7 +167,7 @@
 
 button {
   padding: 8px 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--button-border-color);
   border-radius: 8px;
   background: white;
   cursor: pointer;
