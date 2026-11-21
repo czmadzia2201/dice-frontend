@@ -66,18 +66,15 @@ button:hover {
   text-align: left;
 }
 
-/* pionowe separatory */
 .modal th:not(:last-child),
 .modal td:not(:last-child) {
   border-right: 1px solid var(--border-color);
 }
 
-/* delikatne poziome linie */
 .modal tr:not(:last-child) td {
   border-bottom: 1px solid var(--border-color);
 }
 
-/* nagłówek odcięty mocniej */
 .modal thead tr {
   border-bottom: 2px solid var(--border-color);
 }
